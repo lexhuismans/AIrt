@@ -90,11 +90,6 @@ def get_item_info(item_url):
 
     soup = BeautifulSoup(item_page.html.html, 'html.parser')
 
-    # Extracting price
-    price = soup.find('div', class_='bid-column').find(text=re.compile('€'))# [0].find('span').text
-    price = float(re.findall(r'\b\d+\b', price)[0])
-    print(price)
-
     # Extracting info
     info_table = soup.find('info-table')
 
