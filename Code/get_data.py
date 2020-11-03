@@ -19,7 +19,7 @@ def get_items_url(URL, number_of_pages, items_per_page, past_yields = False):
     items_per_page : int
         Number of items per page.
     past_yields : boolean
-        True if pages with past yields. False if current offers. 
+        True if pages with past yields. False if current offers.
 
     Returns
     -------
@@ -90,8 +90,16 @@ def get_item_info(item_url):
 
     soup = BeautifulSoup(item_page.html.html, 'html.parser')
 
+    # Extracting price
+    price = soup.find('div', class_='bid-column').find(text=re.compile('€'))# [0].find('span').text
+    price = float(re.findall(r'\b\d+\b', price)[0])
+    print(price)
+
+    # Extracting info
     info_table = soup.find('info-table')
-    print(info_table)
+
+    return price
+
 
 """
 zeefdruk_url = 'https://www.kunstveiling.nl/veilingopbrengsten/lijst?technique=silkscreen&offset='
@@ -102,4 +110,5 @@ print(urls)
 """
 
 test_item = "https://www.kunstveiling.nl/items/eduardo-paolozzi-lots-of-pictures-lots-of-fun/321631"
-get_item_info(test_item)
+test_item_sold = "https://www.kunstveiling.nl/items/vera-tummers-van-hasselt-brons-sculptuur-gesigneerd-mariken-van-nieumeghenmariken-van-nimwegen/316675"
+get_item_info(test_item_sold)
