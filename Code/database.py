@@ -78,4 +78,4 @@ def main(off_set = 6900):
         print('item: ', start_at+50)
 
 if __name__ == "__main__":
-    clean_data()
+    clean_and_save_data()

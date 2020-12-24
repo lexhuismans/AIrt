@@ -13,11 +13,23 @@ import get_data as gd
 
 """
 !!TO DO!!
-Make separate function for cleaning data. Maybe clean data right after import. 
+Make separate function for cleaning data. Maybe clean data right after import.
 Make separate function for training and saving the result. (pickle)
 """
 
 columns = ['Price', 'Artist', 'Hoogte', 'Breedte', 'Birth', 'Death', 'Ingelijst', 'Area']
+
+def filter_artists():
+    """
+    Filter to only take subset of artists.
+    """
+    pass
+
+def filter_words():
+    """
+    Filter to only take subset of title words.
+    """
+    pass
 
 def train_on_data(data_path = r'../data/zeefdrukken_data_cleaned.csv'):
     df = pd.read_csv(data_path)
@@ -28,6 +40,7 @@ def train_on_data(data_path = r'../data/zeefdrukken_data_cleaned.csv'):
     df.dropna(inplace = True)
 
     #-------------------------Preprocessing-------------------------------------
+    # Artists
     artist_count = df['Artist'].value_counts()
     high_freq_artist = artist_count[artist_count > 100].index.tolist()
     df = df.loc[df['Artist'].isin(high_freq_artist)]
@@ -35,6 +48,11 @@ def train_on_data(data_path = r'../data/zeefdrukken_data_cleaned.csv'):
     # Generate binary values using get_dummies
     dum_df = pd.get_dummies(df['Artist'], columns=['Artist'], prefix=None)
     df.drop(columns = ['Artist'], inplace=True)
+
+    # Title words
+    word_list = pd.DataFrame(re.findall(r'\w+', df['Title'].to_string(header=False, index=False)))
+    word_count = word_list.value_counts()
+    high_freq_words = word_count[word_count>300].index.tolist()
 
     X = df.iloc[:,1:]
     y = df.iloc[:,0]
