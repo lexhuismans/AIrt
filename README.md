@@ -1,4 +1,6 @@
 # AIrt
+Code to scrape and analyze silkscreen data from www.kunstveiling.nl.
+Uses BeatifulSoup4, Pandas and some Scikitlearn. 
 
 ## Libraries
 De web scraping guide [hier](https://realpython.com/beautiful-soup-web-scraper-python/).
